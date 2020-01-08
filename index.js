@@ -19,31 +19,40 @@ if (!_token) {
   window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user-top-read&response_type=token&show_dialog=true`;
 }
 
-fetch("https://api.spotify.com/v1/playlists/4SsHmrWvOptrdhzGONDXt2", {
+// Make a call using the token
+fetch("https://api.spotify.com/v1/me/playlists", {
   headers: {
     Authorization: "Bearer " + _token
   }
 })
   .then(res => res.json())
-  .then(data => {
-    document.getElementById("playlist-name").innerText = data["name"];
-    tracks = document.querySelector("table");
+  .then(data => console.log(data));
 
-    data.tracks.items.map(item => {
-      let row = tracks.insertRow();
-
-      let cell = row.insertCell();
-      cell.innerText = item.track.name;
-
-      let artistCell = row.insertCell();
-      artistCell.innerText = item.track.artists[0].name;
-
-      let previewCell = row.insertCell();
-      let previewText = (previewCell.innerHTML = `${
-        item.track.preview_url
-          ? `<audio controls><source src=${item.track.preview_url} type="audio/mpeg"> </audio>`
-          : "Not available"
-      }
-      `);
-    });
-  });
+// fetch("https://api.spotify.com/v1/playlists/4SsHmrWvOptrdhzGONDXt2", {
+//   headers: {
+//     Authorization: "Bearer " + _token
+//   }
+// })
+//   .then(res => res.json())
+//   .then(data => {
+//     document.getElementById("playlist-name").innerText = data["name"];
+//     tracks = document.querySelector("table");
+//
+//     data.tracks.items.map(item => {
+//       let row = tracks.insertRow();
+//
+//       let cell = row.insertCell();
+//       cell.innerText = item.track.name;
+//
+//       let artistCell = row.insertCell();
+//       artistCell.innerText = item.track.artists[0].name;
+//
+//       let previewCell = row.insertCell();
+//       let previewText = (previewCell.innerHTML = `${
+//         item.track.preview_url
+//           ? `<audio controls><source src=${item.track.preview_url} type="audio/mpeg"> </audio>`
+//           : "Not available"
+//       }
+//       `);
+//     });
+//   });
